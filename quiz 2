@@ -1,0 +1,27 @@
+calculate_bill() {
+    local unit_consumed=$1
+    local total_bill=0
+
+    if (( $unit_consumed < 200 ));then
+       total_bill=$(( $unit_consumed * 120 ))
+    elif (( $unit_consumed >= 200 && $unit_consumed < 400 ));then
+        total_bill=$(( $unit_consumed * 150 ))
+    elif (( $unit_consumed >= 400 && $unit_consumed < 600 ));then
+        total_bill=$(( $unit_consumed * 180 ))
+    else
+        total_bill=$(( $unit_consumed * 200 ))
+    fi
+
+    echo $total_bill  
+
+}
+
+read -p "Enter CustomerID: " customer_id
+read -p "Enter CustomerName: "customer_name
+read -p "Enter UnitConsumed: "unit_consumed
+
+total_bill=$(calculate_bill $unit_consumed)
+
+echo "CustomerID: $customer_id"
+echo "CustomerName: $customer_name"
+echo "Total Bill:Ksh $total_bill"
