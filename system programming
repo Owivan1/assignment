@@ -1,0 +1,67 @@
+[22/03, 20:57] +254 769 943744: read -p "Enter employee name: "
+read -p "Enter hours worked: "
+read -p "Enter rate per hour: "
+
+basic_pay=$(echo "$hours_worked * $rate_per_hour" | bc)
+
+if [ $basic_pay -gt 70000 ];then
+   tax=$(echo "0.25 * $basic_pay" | bc)
+elif [ $basic_pay -ge 15000 ];then
+   tax=$(echo "0.15 * $basic_pay" | bc)
+else
+    tax=0
+fi
+
+
+net_pay=$(echo "$basic_pay-$tax" | bc)
+             
+echo "Employee name: $name"
+echo "Basic pay: $basic_pay"
+echo "Tax: $tax"
+echo "Net pay: $net_pay"
+[22/03, 20:57] +254 769 943744: calculate_bill() {
+    local unit_consumed=$1
+    local total_bill=0
+
+    if (( $unit_consumed < 200 ));then
+       total_bill=$(( $unit_consumed * 120 ))
+    elif (( $unit_consumed >= 200 && $unit_consumed < 400 ));then
+        total_bill=$(( $unit_consumed * 150 ))
+    elif (( $unit_consumed >= 400 && $unit_consumed < 600 ));then
+        total_bill=$(( $unit_consumed * 180 ))
+    else
+        total_bill=$(( $unit_consumed * 200 ))
+    fi
+
+    echo $total_bill  
+
+}
+
+read -p "Enter CustomerID: " customer_id
+read -p "Enter CustomerName: "customer_name
+read -p "Enter UnitConsumed: "unit_consumed
+
+total_bill=$(calculate_bill $unit_consumed)
+
+echo "CustomerID: $customer_id"
+echo "CustomerName: $customer_name"
+echo "Total Bill:Ksh $total_bill"
+[22/03, 20:57] +254 769 943744: #include<stdio.h>
+#include<fcntl.h>
+#include<unistd.h>
+
+int main() {
+  int fd;
+  char * msg = "Hello World";
+
+  fd = open("example.txt", O_WRONLY | O_CREAT | O_TRUNC, 0644);
+  write(fd, msg, strlen(msg));
+  close(fd);
+
+  fd = open("example.txt", O_RDONLY);
+  read(fd, msg, strlen(msg));
+  printf("Content read from the file: %s\n", msg);
+  close(fd);
+
+  return 0;
+}
